@@ -9,3 +9,4 @@ __pycache__/
 .env
 .ipynb
 .ruff_cache/
+*__pycache__
