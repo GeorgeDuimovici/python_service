@@ -1,18 +1,31 @@
 #!/usr/bin/env python3
+"""FastAPI application to fetch weather information for a given location using wttr.in API."""
+from fastapi import FastAPI
+import uvicorn
+import httpx
 
-import requests
-import sys
+app = FastAPI()
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python main.py <location>")
-        sys.exit(1)
-    location = sys.argv[1]
+@app.get("/")
+async def read_root():
+    """Root endpoint that returns a welcome message."""
+    return {"message": "Welcome to the Weather API!"}
+
+
+@app.get("/weather/{location}")
+async def get_weather(location: str):
+    """Fetch weather information for a given location using wttr.in API."""
     url = f"https://wttr.in/{location}"
-    response = requests.get(url)
-    print(response.text)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        if response.status_code == 200:
+            return {"weather": response.text}
+    return {
+        "error": "Could not retrieve weather data",
+        "status_code": response.status_code,
+    }
 
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app, host="0.0.0.0", port=8000)
