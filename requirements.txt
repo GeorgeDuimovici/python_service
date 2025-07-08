@@ -1,4 +1,4 @@
-requests    
+requests
 pylint
 uvicorn
 fastapi
@@ -7,3 +7,4 @@ ruff
 mypy
 pytest
 coverage
+pre-commit
