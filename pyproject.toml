@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digesting-feed"
+version = "0.1.0"
+description = "Feeds you can digest — fast"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests",        # replace or add your real dependencies
+    "beautifulsoup4",  # just examples
+]
+
+[project.scripts]
+digest-feed = "digesting_feed.main:main"
